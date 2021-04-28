@@ -7,8 +7,7 @@ import edu.nefu.herostory.msg.GameMsgProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 
-public class UserEntryCmdHandler implements ICmdHandler<GameMsgProtocol.UserEntryCmd> {
-    @Override
+public class UserEntryCmdHandler {
     public void handle(ChannelHandlerContext ctx, GameMsgProtocol.UserEntryCmd msg) {
         // 从指令对象中获取用户Id 和 英雄形象
         GameMsgProtocol.UserEntryCmd cmd = msg;

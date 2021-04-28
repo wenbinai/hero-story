@@ -1,8 +1,7 @@
 package edu.nefu.herostory;
 
-import edu.nefu.herostory.cmdHandler.UserEntryCmdHandler;
-import edu.nefu.herostory.cmdHandler.UserMoveToCmdHandler;
-import edu.nefu.herostory.cmdHandler.WhoElseIsHereCmdHandler;
+import com.google.protobuf.GeneratedMessageV3;
+import edu.nefu.herostory.cmdHandler.*;
 import edu.nefu.herostory.model.UserManager;
 import edu.nefu.herostory.msg.GameMsgProtocol;
 import io.netty.channel.ChannelHandlerContext;
@@ -53,15 +52,19 @@ public class GameMsgHandler extends SimpleChannelInboundHandler {
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.println("收到客户端消息, msgClazz = " + msg.getClass().getName() + "msg = " + msg);
 
-        if (msg instanceof GameMsgProtocol.UserEntryCmd) {
-            (new UserEntryCmdHandler()).handle(ctx, (GameMsgProtocol.UserEntryCmd) msg);
-        } else if (msg instanceof GameMsgProtocol.WhoElseIsHereCmd) {
-            (new WhoElseIsHereCmdHandler()).handle(ctx, (GameMsgProtocol.WhoElseIsHereCmd) msg);
-        } else if (msg instanceof GameMsgProtocol.UserMoveToCmd) {
-            (new UserMoveToCmdHandler()).handle(ctx, (GameMsgProtocol.UserMoveToCmd) msg);
-        }
+        ICmdHandler<? extends GeneratedMessageV3> cmdHandler = CmdHandlerFactory.create(msg);
 
+
+        if (null != cmdHandler) {
+            cmdHandler.handle(ctx, cast(msg));
+        }
     }
 
-
+    private <TCmd extends GeneratedMessageV3> TCmd cast(Object msg) {
+        if (null == msg) {
+            return null;
+        } else {
+            return (TCmd) msg;
+        }
+    }
 }
