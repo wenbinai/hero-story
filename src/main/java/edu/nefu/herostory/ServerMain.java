@@ -38,7 +38,9 @@ public class ServerMain {
                         new WebSocketServerProtocolHandler("/websocket"),
                         // 4. 对消息进行解码
                         new GameMsgDecoder(),
-                        // 5. 处理自己的业务逻辑
+                        // 5. 自定义编码器
+                        new GameMsgEncoder(),
+                        // . 处理自己的业务逻辑
                         new GameMsgHandler()
                 );
             }
