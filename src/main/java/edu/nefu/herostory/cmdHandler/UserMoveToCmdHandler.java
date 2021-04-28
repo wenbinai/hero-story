@@ -5,7 +5,7 @@ import edu.nefu.herostory.msg.GameMsgProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.AttributeKey;
 
-public class UserMoveToCmdHandler {
+public class UserMoveToCmdHandler implements ICmdHandler<GameMsgProtocol.UserMoveToCmd> {
     public void handle(ChannelHandlerContext ctx, GameMsgProtocol.UserMoveToCmd msg) {
         // 获取用户Id, 不能将userId放在客户端cmd中, 不安全, 容易被修改
         Integer userId = (Integer) ctx.channel().attr(AttributeKey.valueOf("userId")).get();
