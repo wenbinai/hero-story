@@ -1,4 +1,4 @@
-package edu.nefu.herostory;
+package edu.nefu.herostory.model;
 
 public class User {
     // 用户id
