@@ -40,6 +40,8 @@ public class GameMsgDecoder extends ChannelInboundHandlerAdapter {
             case GameMsgProtocol.MsgCode.USER_MOVE_TO_CMD_VALUE:
                 cmd = GameMsgProtocol.UserMoveToCmd.parseFrom(msgBody);
                 break;
+            case GameMsgProtocol.MsgCode.USER_ATTK_CMD_VALUE:
+                cmd = GameMsgProtocol.UserAttkCmd.parseFrom(msgBody);
         }
 
         if (null != cmd) {
